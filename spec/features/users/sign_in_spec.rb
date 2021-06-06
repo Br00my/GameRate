@@ -6,16 +6,18 @@ feature 'User can log in', "
   I'd like to be able to sign in
 " do
 
-  scenario 'user exists' do
+  scenario 'Tries to sign in with existing user' do
     FactoryBot.create(:user)
     visit root_path
     click_on 'Sign in'
 
-    expect(page).to have_content 'Successfully authenticated from Steam account.'
+    expect(page).to have_content 'Hi, tester! You can now rate games.'
   end
 
-    # scenario 'user does not exist' do
-    #   click_on 'Sign in'
-    # end
-  # end
+  scenario 'Tries to sign in without existing user' do
+    visit root_path
+    click_on 'Sign in'
+
+    expect(page).to have_content 'Hi, tester! You can now rate games.'
+  end
 end

@@ -3,12 +3,12 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
   def steam
     @user = User.find_by(uid: auth[:uid].to_s)
 
-    if @user&.persisted?
-      sign_in_and_redirect @user
-      set_flash_message(:notice, :success, kind: 'Steam') if is_navigational_format?
-    else
-      redirect_to root_path, alert: 'Something went wrong'
+    unless @user&.persisted?
+      @user = User.create(username: auth[:info][:nickname], uid: auth[:uid])
     end
+
+    sign_in_and_redirect @user
+    set_flash_message(:notice, :success, username: auth[:info][:nickname]) if is_navigational_format?
   end
 
   private

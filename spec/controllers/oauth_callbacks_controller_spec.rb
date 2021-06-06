@@ -4,7 +4,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
   before { @request.env['devise.mapping'] = Devise.mappings[:user] }
 
   describe '#steam' do
-    let(:oauth_data) { { provider: 'steam', uid: 123 } }
+    let(:oauth_data) { { provider: 'steam', uid: 1234, info: { nickname: 'tester' } } }
 
     before do
       allow(request.env).to receive(:[]).and_call_original
@@ -14,8 +14,9 @@ RSpec.describe OauthCallbacksController, type: :controller do
     context 'user exists' do
       let!(:user) { create(:user) }
 
+      before { get :steam }
+
       it 'login user if it exists' do
-        byebug
         expect(subject.current_user).to eq user
       end
 
@@ -25,16 +26,18 @@ RSpec.describe OauthCallbacksController, type: :controller do
     end
 
     context 'user does not exist' do
-      before do
+      it 'creates user' do
+        expect{ get :steam }.to change(User, :count).by(1)
+      end
+
+      it 'login user if it exists' do
         get :steam
+        expect(subject.current_user).to eq User.last
       end
 
       it 'redirects to root path' do
+        get :steam
         expect(response).to redirect_to root_path
-      end
-
-      it 'does not login user if it does not exist' do
-        expect(subject.current_user).to_not be
       end
     end
   end
