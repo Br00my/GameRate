@@ -1,7 +1,5 @@
 class User < ApplicationRecord
-  devise :omniauthable, omniauth_providers: %i[steam]
+  devise :omniauthable, omniauth_providers: %i[steam]  
 
-  has_many :authorizations, dependent: :destroy
-
-  validates :username,:email, presence: true
+  validates :username, :uid, :key, presence: true
 end

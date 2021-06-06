@@ -1,14 +1,7 @@
 FactoryBot.define do
-  sequence :username do |n|
-    "username#{n}"
-  end
-
-  sequence :email do |n|
-    "email#{n}@mail.ru"
-  end
-
   factory :user do
-    username
-    email
+    username { 'tester' }
+    uid { '1234' }
+    key { Rails.application.credentials[Rails.env.to_sym][:steam][:key] }
   end
 end

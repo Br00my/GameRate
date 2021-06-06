@@ -1,7 +1,7 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
-  skip_before_action :verify_authenticity_token, only: [:steam]
+  skip_forgery_protection with: :null_session
   def steam
-    @user = FindForOauthService.new(auth).call
+    @user = User.find_by(uid: auth[:uid].to_s)
 
     if @user&.persisted?
       sign_in_and_redirect @user

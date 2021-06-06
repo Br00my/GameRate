@@ -1,34 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe OauthCallbacksController, type: :controller do
-  let(:service) { double('FindForOuathService') }
+  before { @request.env['devise.mapping'] = Devise.mappings[:user] }
 
   describe '#steam' do
     let(:oauth_data) { { provider: 'steam', uid: 123 } }
 
-    before { @request.env['devise.mapping'] = Devise.mappings[:user] }
-    
     before do
       allow(request.env).to receive(:[]).and_call_original
       allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
-    end
-    
-    it 'finds user from oauth data' do
-      expect(FindForOauthService).to receive(:new).with(oauth_data).and_return(service)
-      expect(service).to receive(:call)
-      get :steam
     end
 
     context 'user exists' do
       let!(:user) { create(:user) }
 
-      before do
-        allow(FindForOauthService).to receive(:new).with(oauth_data).and_return(service)
-        allow(service).to receive(:call).and_return(user)
-        get :steam
-      end
-
       it 'login user if it exists' do
+        byebug
         expect(subject.current_user).to eq user
       end
 
@@ -39,8 +26,6 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
     context 'user does not exist' do
       before do
-        allow(FindForOauthService).to receive(:new).with(oauth_data).and_return(service)
-        allow(service).to receive(:call)
         get :steam
       end
 

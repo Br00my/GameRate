@@ -5,14 +5,14 @@ default: &default
 
 development:
   <<: *default
-  database: gr_development
+  database: gamerate_development
   host: localhost
   username: <%= ENV.fetch("PG_USERNAME") %>
   password: <%= ENV.fetch("PG_PASSWORD") %>
 
 test:
   <<: *default
-  database: gr_test
+  database: gamerate_test
   host: localhost
   username: <%= ENV.fetch("PG_USERNAME") %>
   password: <%= ENV.fetch("PG_PASSWORD") %>
@@ -20,4 +20,4 @@ test:
 
 production:
   <<: *default
-  database: gr_production
+  database: gamerate_production
