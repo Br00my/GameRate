@@ -11,5 +11,6 @@ feature 'User can log out', "
     click_on 'Sign in'
 
     click_on 'Sign out'
+    expect(page).to have_content 'Good bye!'
   end
 end

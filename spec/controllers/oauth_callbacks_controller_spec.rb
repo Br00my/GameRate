@@ -4,7 +4,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
   before { @request.env['devise.mapping'] = Devise.mappings[:user] }
 
   describe '#steam' do
-    let(:oauth_data) { { provider: 'steam', uid: 1234, info: { nickname: 'tester' } } }
+    let(:oauth_data) { { provider: 'steam', uid: 76561197960434622, info: { nickname: 'tester' } } }
 
     before do
       allow(request.env).to receive(:[]).and_call_original

@@ -18,5 +18,6 @@ module GameRate
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    Steam.apikey = Rails.application.credentials[Rails.env.to_sym][:steam][:key]
   end
 end
