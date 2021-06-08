@@ -9,6 +9,8 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
       @user = User.create(id: auth[:uid], username: auth[:info][:nickname])
       if profile_public?
         AddOwnedGamesService.new(@user).call
+      else
+        flash[:notice] += "Make your account public"
       end
     end
 
