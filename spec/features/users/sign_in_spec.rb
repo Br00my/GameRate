@@ -19,5 +19,6 @@ feature 'User can log in', "
     click_on 'Sign in'
 
     expect(page).to have_content 'Hi, tester! You can now rate games.'
+    expect(page).to have_content 'Here are the games we found in your profile'
   end
 end
