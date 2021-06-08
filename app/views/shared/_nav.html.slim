@@ -1,0 +1,5 @@
+.nav
+  - if user_signed_in?
+    = link_to 'Sign out', users_sign_out_path, method: :delete
+  - else
+    = link_to 'Sign in', user_steam_omniauth_authorize_path, method: :post
