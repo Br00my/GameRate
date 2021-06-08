@@ -9,9 +9,6 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
       @user = User.create(id: auth[:uid], username: auth[:info][:nickname])
       if profile_public?
         AddOwnedGamesService.new(@user).call
-        flash[:notice] += "\nHere are the games we found in your profile"
-      else
-        flash[:alert] += "\nYour Steam profile is private. Make it public so we can list your purchased games"
       end
     end
 
