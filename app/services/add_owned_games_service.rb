@@ -5,6 +5,9 @@ class AddOwnedGamesService
 
   def call
     games = Steam::Player.owned_games(@user.id, params: { include_appinfo: 1 })["games"]
+
+    return unless games
+
     games.each do |game|
       game_id = game['appid']
       game_details = Steam::Store.app_details(game_id)["#{game_id}"]
