@@ -1,24 +1,5 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Сайт, пользователи которого смогут оставлять отзывы об игре и просматривать их рейтинг.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Пользователь авторизуется через игровой сервис Steam и оставляет отзыв только о приобретенной игре, а вес отзыва, в создании рейтинга, будет зависеть от сыгранного времени.
