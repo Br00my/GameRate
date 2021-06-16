@@ -1,7 +1,8 @@
 class User < ApplicationRecord
-  devise :omniauthable, omniauth_providers: %i[steam]  
+  devise :omniauthable, omniauth_providers: %i[steam]
 
-  has_and_belongs_to_many :games, as: :player, class_name: 'Game', join_table: :purchases
+  has_many :purchases
+  has_many :games, as: :player, class_name: 'Game', through: :purchases
 
   validates :username, presence: true
 end

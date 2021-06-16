@@ -1,5 +1,6 @@
 class Game < ApplicationRecord
-  validates :title, :picture, :genres, presence: true
+  validates :title, :picture, presence: true
 
-  has_and_belongs_to_many :players, class_name: 'User', join_table: :purchases
+  has_many :purchases
+  has_many :players, class_name: 'User', through: :purchases
 end
