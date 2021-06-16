@@ -1,5 +1,6 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
   skip_forgery_protection with: :null_session
+
   def steam
     @user = User.find_by(id: auth[:uid])
 
@@ -7,7 +8,7 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
 
     unless @user
       @user = User.create(id: auth[:uid], username: auth[:info][:nickname])
-      if profile_public?
+      if SteamCover.profile_public?(auth)
         AddOwnedGamesService.new(@user).call
       else
         flash[:notice] += "Make your account public"
@@ -18,10 +19,6 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   private
-
-  def profile_public?
-    Steam::User.summary(auth[:uid])["communityvisibilitystate"] == 3
-  end
 
   def auth
     request.env['omniauth.auth']
