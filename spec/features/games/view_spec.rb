@@ -19,7 +19,8 @@ feature 'User can view owned games', "
 
     scenario 'with private account' do
       OmniAuth.config.add_mock(:steam, { uid: 76561199154278084, info: { nickname: 'tester' } })
-      visit user_steam_omniauth_callback_path
+      visit root_path
+      click_on 'Sign in'
 
       expect(page).to have_content 'Make your account public'
     end
