@@ -24,7 +24,7 @@ class AddOwnedGamesService
       new_game = Game.find_by(id: game_id)
 
       new_game = Game.create!(id: game_id, title: game_title, picture: game_picture, genres: game_genres) unless new_game
-      Purchase.create(user: @user, game: new_game, playtime: playtime)
+      Purchase.create!(user: @user, game: new_game, playtime: playtime)
     end
   end
 end
