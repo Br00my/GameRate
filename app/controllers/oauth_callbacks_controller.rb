@@ -7,7 +7,7 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
     set_flash_message(:notice, :success, username: auth[:info][:nickname]) if is_navigational_format?
 
     unless @user
-      @user = User.create(id: auth[:uid], username: auth[:info][:nickname])
+      @user = User.create!(id: auth[:uid], username: auth[:info][:nickname])
       if SteamCover.profile_public?(auth)
         AddOwnedGamesService.new(@user).call
       else
