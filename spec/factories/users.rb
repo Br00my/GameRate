@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    id { 76561199108978712 }
+    id { 76561197972257035 }
     username { 'tester' }
   end
 end
