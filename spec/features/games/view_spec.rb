@@ -10,10 +10,8 @@ feature 'User can view owned games', "
       visit root_path
       click_on 'Sign in'
 
-      SteamCover.owned_games(User.last).each do |game|
-        game_genres = SteamCover.game_details(game['appid'])["data"]["genres"].map{|x|x['description']}.join(', ')
-        expect(page).to have_content game['name']
-        expect(page).to have_content game_genres
+      Game.pluck(:title) do |game_title|
+        expect(page).to have_content game_title
       end
     end
 

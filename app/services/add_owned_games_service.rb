@@ -4,27 +4,16 @@ class AddOwnedGamesService
   end
 
   def call
-    games = SteamCover.owned_games(@user)
+    games = SteamCov.owned_games(@user.id)
     return if games.nil?
 
     games.each do |game|
-      game_id = game['appid']
-      game_details = SteamCover.game_details(game_id)
-      game_title = game['name']
+      game = SteamGameCov.new(game['appid'], game['name'], game['img_logo_url'], game['playtime_forever'])
 
-      next if !game_details['success']
-      
-      game_picture = "http://media.steampowered.com/steamcommunity/public/images/apps/#{game_id}/#{game['img_logo_url']}.jpg"
-      if game_details["data"]["genres"]
-        game_genres = game_details["data"]["genres"].map{|x|x['description']}.join(', ')
-      end
+      next unless game.success?
 
-      playtime = game['playtime_forever'] / 60
-
-      new_game = Game.find_by(id: game_id)
-
-      new_game = Game.create!(id: game_id, title: game_title, picture: game_picture, genres: game_genres) unless new_game
-      Purchase.create!(user: @user, game: new_game, playtime: playtime)
+      new_game = Game.find_by(id: game.id) || Game.create!(id: game.id, title: game.title, picture: game.picture, genres: game.genres)
+      Purchase.create!(user: @user, game: new_game, playtime: game.playtime)
     end
   end
 end

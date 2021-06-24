@@ -8,7 +8,7 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
 
     unless @user
       @user = User.create!(id: auth[:uid], username: auth[:info][:nickname])
-      if SteamCover.profile_public?(auth)
+      if SteamCov.profile_public?(auth[:uid])
         AddOwnedGamesService.new(@user).call
       else
         flash[:notice] += "Make your account public"
