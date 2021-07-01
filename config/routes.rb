@@ -1,6 +1,4 @@
-require 'sidekiq/web'
 Rails.application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq'
   scope 'games' do
     get 'index', to: 'games#index', as: :games_path
     post 'update_list', to: 'games#update_list', as: :games_update_list
