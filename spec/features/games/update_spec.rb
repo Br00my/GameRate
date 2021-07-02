@@ -5,8 +5,11 @@ feature 'User can update list of owned games', "
   I'd like to update games
 " do
 
+  given(:user){ create(:user) }
+  given(:game){ create(:game) }
+  given(:purchase){ create(:purchase, user: user, game: game) }
+
   scenario 'Authenticated user tries to update list of owned games' do
-    FactoryBot.create(:user)
     visit root_path
     click_on 'Sign in'
 

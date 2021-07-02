@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :purchase do
-  it { should belong_to :user }    
-  it { should belong_to :game }    
+    user
+    game
+    playtime { 10 }
   end
 end

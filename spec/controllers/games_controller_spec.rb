@@ -17,7 +17,7 @@ RSpec.describe GamesController, type: :controller do
 
     before { login(user) }
 
-    it 'adds new games' do
+    it 'adds new games to user' do
       expect(AddOwnedGamesService).to receive(:new).with(user).and_return(service)
       expect(service).to receive(:call)
       post :update_list
