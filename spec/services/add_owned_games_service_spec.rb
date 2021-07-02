@@ -4,11 +4,13 @@ RSpec.describe AddOwnedGamesService do
   let!(:user) { create(:user) }
 
   it 'creates games' do
+    byebug
     AddOwnedGamesService.new(user).call
     
+    steam_games = SteamCov.owned_games(user.id)
     user.games.each do |game|
-      expect(SteamCov.owned_games(user).map{|game| game['appid']}).to include game.id
-      expect(SteamCov.owned_games(user).map{|game| game['name']}).to include game.title
+      expect(steam_games.map{|game| game['appid']}).to include game.id
+      expect(steam_games.map{|game| game['name']}).to include game.title
     end
   end
 
