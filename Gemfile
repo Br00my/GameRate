@@ -19,6 +19,9 @@ gem 'omniauth-steam'
 gem 'omniauth-rails_csrf_protection'
 gem 'slim-rails'
 gem 'steam-api'
+gem 'activerecord-session_store'
+gem 'sidekiq'
+gem 'whenever', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
