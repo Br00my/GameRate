@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  before_action :find_game, only: %i[show]
   def index
     @games = Game.all
   end
@@ -8,5 +9,15 @@ class GamesController < ApplicationController
     AddOwnedGamesService.new(current_user).call
     new_games = [current_user.games.count - old_games, 0].max
     redirect_to root_path, notice: "#{new_games} new #{'game'.pluralize(new_games)} found."
+  end
+
+  def show
+    @review = Review.new
+  end
+
+  private
+
+  def find_game
+    @game = Game.find(params[:id])
   end
 end
