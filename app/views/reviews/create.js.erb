@@ -1,2 +1,6 @@
 document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/flash' %>");
-document.querySelector('.reviews').innerHTML += '<%= j render @review %>';
+
+<% if @review.persisted? %>
+  document.querySelector('.reviews').innerHTML += '<%= j render @review %>';
+  document.querySelector('#new_review').style.display = 'none';
+<% end %>

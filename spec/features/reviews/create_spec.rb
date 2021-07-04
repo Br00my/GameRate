@@ -31,5 +31,20 @@ feature 'User can create reviews', "
       click_on 'Publish'
       expect(page).to have_content 'Your review was not published. Both star rate and text are needed.'
     end
+
+    scenario 'tries to publish more than one review' do
+      review_text = 'Versatile gameplay and interesting plot'
+      find('#star5').click
+      fill_in 'text', with: review_text
+      click_on 'Publish'
+      expect(page).to_not have_selector '.review_form'
+
+    end
+  end
+
+  scenario 'Unauthenticated user tries to publish review' do
+    visit game_path(game)
+
+    expect(page).to_not have_selector '.review_form'
   end
 end

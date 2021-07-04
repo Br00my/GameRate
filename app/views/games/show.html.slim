@@ -2,7 +2,7 @@
 = @game.genres
 
 - if user_signed_in?
-  = form_for [@game, @review], remote: true do |f|
+  = form_for [@game, @review], remote: true, html: { class: 'review_form' } do |f|
 
     .rate
       = f.radio_button :rate, 5, id: 'review_star5'

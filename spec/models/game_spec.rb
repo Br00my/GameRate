@@ -6,5 +6,5 @@ RSpec.describe Game, type: :model do
   it { should validate_presence_of :genres }
 
   it { should have_many :purchases }
-  it { should have_many :users }
+  it { should have_many :owners }
 end
