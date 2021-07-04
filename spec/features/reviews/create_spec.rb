@@ -5,22 +5,31 @@ feature 'User can create reviews', "
   I'd like to create reviews
 " do
 
-  given(:user){ create(:user) }
   given(:game){ create(:game) }
-  given!(:purchase) { create(:purchase, user: user, game: game, playtime: 10) }
+  given!(:purchase) { create(:purchase, game: game) }
 
-  describe 'Authenticated user' do
-    scenario 'tries to review game' do
+  describe 'Authenticated user', js: true do
+    background do
       visit root_path
       click_on 'Sign in'
-
       visit game_path(game)
-      choose '#star5'
-      fill_in 'Text', with: 'Versatile gameplay and interesting plot'
-      click_on 'Publish'
+    end
 
-      visit root_path
-      check '#star5'
+    scenario 'tries to publish valid review' do
+      review_text = 'Versatile gameplay and interesting plot'
+      find('#star5').click
+      fill_in 'text', with: review_text
+      click_on 'Publish'
+      within '.review' do
+        expect(page).to have_content review_text
+        expect(page).to have_content 5
+      end
+    end
+
+    scenario 'tries to publish invalid review' do
+      find('#star5').click
+      click_on 'Publish'
+      expect(page).to have_content 'Your review was not published. Both star rate and text are needed.'
     end
   end
 end

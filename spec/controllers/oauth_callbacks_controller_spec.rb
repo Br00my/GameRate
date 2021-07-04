@@ -32,7 +32,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
       it 'login user if it exists' do
         get :steam
-        expect(subject.current_user.id).to eq 76561199163469955
+        expect(subject.current_user.id).to eq oauth_data[:uid]
       end
 
       it 'redirects to root path' do

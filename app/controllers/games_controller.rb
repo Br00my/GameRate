@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
-  before_action :find_game, only: %i[show]
+  before_action :set_game, only: %i[show]
+  
   def index
     @games = Game.all
   end
@@ -17,7 +18,7 @@ class GamesController < ApplicationController
 
   private
 
-  def find_game
+  def set_game
     @game = Game.find(params[:id])
   end
 end

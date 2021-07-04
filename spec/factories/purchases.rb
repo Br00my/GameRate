@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :purchase do
-    user
+    owner { create(:user) }
     game
     playtime { 10 }
   end
