@@ -1,0 +1,5 @@
+document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/flash' %>");
+
+var review = document.querySelector('#review_<%= @review.id %>');
+review.parentNode.removeChild(review);
+document.querySelector('.review_create_form').style.display = 'block';

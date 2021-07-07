@@ -3,4 +3,15 @@ document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/fla
 <% if @review.persisted? %>
   document.querySelector('.reviews').innerHTML += '<%= j render @review %>';
   document.querySelector('.review_create_form').style.display = 'none';
+  
+  var editLink = document.querySelector('.review_edit_btn');
+
+  editLink.addEventListener('click', function(e){
+      e.target.style.display = 'none';
+
+      document.querySelector('.review_edit_form').style.display = 'block';
+
+      var reviewId = e.target.dataset.review_id;      
+      document.querySelector('#review_data_' + reviewId).style.display = 'none';
+  })
 <% end %>

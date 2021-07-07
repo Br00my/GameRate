@@ -1,7 +1,7 @@
 = @game.title
 = @game.genres
 
-- if user_signed_in? && !current_user&.reviewed?(@game)
+- if user_signed_in?
   = render 'reviews/create_form'
 
 .reviews

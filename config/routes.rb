@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :games, only: %i[index show] do
-    resources :reviews, only: %i[create update]
+    resources :reviews, only: %i[create update destroy]
   end
 
   post 'games/update_list', to: 'games#update_list', as: :games_update_list

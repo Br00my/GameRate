@@ -4,7 +4,6 @@ RSpec.describe AddOwnedGamesService do
   let!(:user) { create(:user) }
 
   it 'creates games' do
-    byebug
     AddOwnedGamesService.new(user).call
     
     steam_games = SteamCov.owned_games(user.id)
