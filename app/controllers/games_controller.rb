@@ -14,6 +14,7 @@ class GamesController < ApplicationController
 
   def show
     @review = Review.new
+    @reviews = @game.reviews
   end
 
   private

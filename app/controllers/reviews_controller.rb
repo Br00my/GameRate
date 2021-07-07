@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
-  before_action :authenticate_user!, only: %i[create]
-  before_action :set_game
+  before_action :authenticate_user!, only: %i[create update]
+  before_action :set_game, only: %i[create update]
+  before_action :set_review, only: %i[update]
 
   def create
     @review = Review.new(review_params.merge({ game: @game, author: current_user }))
@@ -12,6 +13,14 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def update
+    if @review.update(review_params)
+      flash.now[:notice] = 'Your review was successfully edited.'
+    else
+      flash.now[:alert] = 'Your review was not edited. Both star rate and text are needed.'
+    end
+  end
+
   private
 
   def review_params
@@ -20,5 +29,9 @@ class ReviewsController < ApplicationController
 
   def set_game
     @game = Game.find(params[:game_id])
+  end
+
+  def set_review
+    @review = Review.find(params[:id])
   end
 end

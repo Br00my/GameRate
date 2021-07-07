@@ -21,9 +21,11 @@ feature 'User can create reviews', "
       fill_in 'text', with: review_text
       click_on 'Publish'
       within '.review' do
+        expect(find('.review_rate')[:style]).to eq '--rating: 5;'
         expect(page).to have_content review_text
-        expect(page).to have_content 5
       end
+      visit root_path
+      expect(page).to have_content '5.0/5.0'
     end
 
     scenario 'tries to publish invalid review' do
@@ -37,14 +39,16 @@ feature 'User can create reviews', "
       find('#star5').click
       fill_in 'text', with: review_text
       click_on 'Publish'
-      expect(page).to_not have_selector '.review_form'
-
+      expect(page).to_not have_selector '.review_create_form'
+      click_on 'GameRate'
+      find('.game').click
+      expect(page).to_not have_selector '.review_create_form'
     end
   end
 
   scenario 'Unauthenticated user tries to publish review' do
     visit game_path(game)
 
-    expect(page).to_not have_selector '.review_form'
+    expect(page).to_not have_selector '.review_create_form'
   end
 end

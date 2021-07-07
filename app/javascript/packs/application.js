@@ -8,6 +8,8 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+require("channels/reviews")
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()

@@ -6,4 +6,8 @@ class User < ApplicationRecord
   has_many :reviews
 
   validates :username, presence: true
+
+  def reviewed?(game)
+    reviews.any?{ |review| review.game == game }
+  end
 end

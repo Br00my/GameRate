@@ -1,3 +1,9 @@
 .review
-  = @review.rate
-  = @review.text
+  .review_data id="review_data_#{review.id}"
+    .stars.review_rate style="--rating: #{review.rate};"
+    .review_text = review.text
+
+  - if user_signed_in? && current_user&.reviewed?(@game)
+    input.review_edit_btn type='button' value='Edit' data-review_id="#{review.id}"
+
+    = render 'reviews/edit_form', review: review

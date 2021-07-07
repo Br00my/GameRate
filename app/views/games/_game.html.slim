@@ -1,4 +1,6 @@
-.game style="cursor: pointer;" onclick="window.location='games/#{game.id}';"
+.game style='cursor: pointer;' onclick="window.location='games/#{game.id}';"
   = game.title
   = image_tag game.picture
   = game.genres
+  .stars style="--rating: #{game.rate};"
+  = "#{game.rate}/5.0"
