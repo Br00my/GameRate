@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :authenticate_user!, only: %i[create update]
+  before_action :authenticate_user!, only: %i[create update destroy]
   before_action :set_game, only: %i[create]
   before_action :set_review, only: %i[update destroy]
 
@@ -37,6 +37,7 @@ class ReviewsController < ApplicationController
   end
 
   def set_review
-    @review = Review.find(params[:id])
+    @game = Game.find(params[:game_id])
+    @review = @game.reviews.find(params[:id])
   end
 end
