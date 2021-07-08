@@ -5,8 +5,9 @@ feature 'User can create reviews', "
   I'd like to create reviews
 " do
 
+  given(:user){ create(:user) }
   given(:game){ create(:game) }
-  given!(:purchase) { create(:purchase, game: game) }
+  given!(:purchase) { create(:purchase, game: game, owner: user) }
 
   describe 'Authenticated user', js: true do
     background do
