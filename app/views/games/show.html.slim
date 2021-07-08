@@ -1,0 +1,8 @@
+= @game.title
+= @game.genres
+
+- if user_signed_in?
+  = render 'reviews/create_form'
+
+.reviews
+  = render @reviews

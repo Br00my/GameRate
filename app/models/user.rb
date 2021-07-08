@@ -3,6 +3,11 @@ class User < ApplicationRecord
 
   has_many :purchases
   has_many :games, through: :purchases
+  has_many :reviews
 
   validates :username, presence: true
+
+  def reviewed?(game)
+    reviews.any?{ |review| review.game == game }
+  end
 end

@@ -1,0 +1,17 @@
+= form_for [@game, @review], remote: true, html: { class: 'review_create_form', data: { reviewed: current_user&.reviewed?(@game) } } do |f|
+
+  .rate
+    = f.radio_button :rate, 5, id: 'review_create_star_5'
+    = f.label :star5, '5 stars', title: 'Excellent', id: 'star5', for: 'review_create_star_5'
+    = f.radio_button :rate, 4, id: 'review_create_star_4'
+    = f.label :star4, '4 stars', title: 'Very good', id: 'star4', for: 'review_create_star_4'
+    = f.radio_button :rate, 3, id: 'review_create_star_3'
+    = f.label :star3, '3 stars', title: 'Good', id: 'star3', for: 'review_create_star_3'
+    = f.radio_button :rate, 2, id: 'review_create_star_2'
+    = f.label :star2, '2 stars', title: 'Fair', id: 'star2', for: 'review_create_star_2'
+    = f.radio_button :rate, 1, id: 'review_create_star_1'
+    = f.label :star1, '1 star', title: 'Poor', id: 'star1', for: 'review_create_star_1'
+
+  = f.text_area :text, id: :text
+
+  = f.submit 'Publish'

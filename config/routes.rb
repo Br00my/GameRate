@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  scope 'games' do
-    get 'index', to: 'games#index', as: :games_path
-    post 'update_list', to: 'games#update_list', as: :games_update_list
+  resources :games, only: %i[index show] do
+    resources :reviews, only: %i[create update destroy]
   end
+
+  post 'games/update_list', to: 'games#update_list', as: :games_update_list
+
 
   root to: 'games#index'
 
