@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     resources :reviews, only: %i[create update destroy]
   end
 
+  post 'reviews/:review_id/comments', to: 'comments#create', as: :review_comments
+
   post 'games/update_list', to: 'games#update_list', as: :games_update_list
 
 

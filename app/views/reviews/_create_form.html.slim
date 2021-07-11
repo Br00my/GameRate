@@ -1,4 +1,4 @@
-= form_for [@game, @review], remote: true, html: { class: 'review_create_form', data: { reviewed: current_user&.reviewed?(@game) } } do |f|
+= form_for [@game, Review.new], remote: true, html: { class: 'review_create_form', data: { reviewed: current_user.reviewed?(@game) } } do |f|
 
   .rate
     = f.radio_button :rate, 5, id: 'review_create_star_5'

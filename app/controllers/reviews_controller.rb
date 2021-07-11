@@ -4,6 +4,8 @@ class ReviewsController < ApplicationController
   before_action :set_review, only: %i[update destroy]
 
   def create
+    return if current_user.reviewed?(@game)
+
     @review = Review.new(review_params.merge({ game: @game, author: current_user }))
 
     if @review.save
@@ -14,6 +16,8 @@ class ReviewsController < ApplicationController
   end
 
   def update
+    return unless current_user == @review.author
+
     if @review.update(review_params)
       flash.now[:notice] = 'Your review was successfully edited.'
     else
@@ -22,6 +26,8 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
+    return unless current_user == @review.author
+
     @review.destroy
     flash.now[:notice] = 'Your review was successfully deleted.'
   end
@@ -37,7 +43,7 @@ class ReviewsController < ApplicationController
   end
 
   def set_review
-    @game = Game.find(params[:game_id])
+    set_game
     @review = @game.reviews.find(params[:id])
   end
 end

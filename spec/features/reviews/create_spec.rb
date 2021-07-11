@@ -21,6 +21,7 @@ feature 'User can create reviews', "
       find('#star5').click
       fill_in 'text', with: review_text
       click_on 'Publish'
+      expect(page).to have_content 'Your review was successfully published.'
       within '.review' do
         expect(find('.review_rate')[:style]).to eq '--rating: 5;'
         expect(page).to have_content review_text
@@ -44,6 +45,15 @@ feature 'User can create reviews', "
       click_on 'GameRate'
       find('.game').click
       expect(page).to_not have_selector '.review_create_form'
+    end
+
+    scenario 'tries to publish review to game he does not own' do
+      other_user = FactoryBot.create(:user, id: 100)
+      other_game = FactoryBot.create(:game)
+      FactoryBot.create(:purchase, owner: other_user, game: other_game)
+      visit game_path(other_game)
+
+      expect(page).to_not have_css '.review_create_form'
     end
   end
 

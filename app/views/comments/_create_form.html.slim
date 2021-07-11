@@ -1,0 +1,7 @@
+= form_for [review, Comment.new], remote: true, html: { class: 'comment_create_form', id: "comment_create_form_#{review.id}" } do |f|
+
+  input.comment_create_cancel_btn type='button' value='Cancel' data-review_id="#{review.id}"
+
+  = f.text_area :text, id: :text
+
+  = f.submit 'Publish'

@@ -18,7 +18,7 @@ feature 'User can edit reviews', "
         visit game_path(game)
       end
 
-      scenario 'with valid attributes' do
+      scenario 'tries to edit review with valid attributes' do
         click_on 'Edit'
         review_text = 'Versatile gameplay and interesting plot'
         find('#star5').click
@@ -30,24 +30,31 @@ feature 'User can edit reviews', "
         end
       end
 
-      scenario 'with invalid attributes' do
+      scenario 'tries to edit review with invalid attributes' do
         click_on 'Edit'
         find('#star5').click
         fill_in 'text', with: ''
         click_on 'Edit'
         expect(page).to have_content 'Your review was not edited. Both star rate and text are needed.'
       end
-    end
 
-    scenario "tries to edit other user's review" do
-      other_user = FactoryBot.create(:user, id: 1000)
-      FactoryBot.create(:purchase, owner: other_user, game: game)
-      other_user_review = FactoryBot.create(:review, author: other_user, game: game)
-      visit root_path
-      click_on 'Sign in'
-      visit game_path(game)
-      within "#review_data_#{review.id}" do
-        expect(page).to_not have_content '.review_edit_btn'
+      scenario 'tries to cancel review editing' do
+        click_on 'Edit'
+        within '.review_edit_form' do
+          click_on 'Cancel'
+        end
+        expect(page).to_not have_css '.review_edit_form'
+      end
+
+      scenario "tries to edit other user's review" do
+        other_user = FactoryBot.create(:user, id: 100)
+        FactoryBot.create(:purchase, owner: other_user, game: game)
+        other_user_review = FactoryBot.create(:review, author: other_user, game: game)
+        visit game_path(game)
+
+        within "#review_#{other_user_review.id}" do
+          expect(page).to_not have_content 'Edit'
+        end
       end
     end
   end

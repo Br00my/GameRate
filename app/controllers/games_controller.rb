@@ -13,7 +13,6 @@ class GamesController < ApplicationController
   end
 
   def show
-    @review = Review.new
     @reviews = @game.reviews
   end
 
