@@ -1,5 +1,7 @@
 = form_for [@game, review], remote: true, html: { class: 'review_edit_form', style: 'display:none;' } do |f|
 
+  input.review_edit_cancel_btn type='button' value='Cancel'
+
   .rate
     = f.radio_button :rate, 5, id: 'review_edit_star_5'
     = f.label :star5, '5 stars', title: 'Excellent', id: 'star5', for: 'review_edit_star_5'

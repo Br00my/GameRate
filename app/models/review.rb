@@ -3,6 +3,8 @@ class Review < ApplicationRecord
   belongs_to :author, class_name: 'User', foreign_key: :user_id
   belongs_to :game
 
+  has_many :comments
+
   validates :text, :rate, :multiplier, presence: true
 
   before_validation :set_multiplier
