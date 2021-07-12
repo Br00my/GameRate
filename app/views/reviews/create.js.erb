@@ -19,18 +19,16 @@ document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/fla
     editBtn.style.display = 'block';
   })
 
-  var createBtn = document.querySelector('.comment_create_btn');
+  var createBtn = document.querySelector('#comment_create_btn_<%= @review.id %>');
 
   createBtn.addEventListener('click', function(e){
     e.target.style.display = 'none';
-    reviewId = e.target.dataset.review_id;
 
-    document.querySelector('#comment_create_form_' + reviewId).style.display = 'block';
+    document.querySelector('#comment_create_form_<%= @review.id %>').style.display = 'block';
   })
 
-  document.querySelector('.comment_create_cancel_btn').addEventListener('click', function(e){
-    reviewId = e.target.dataset.review_id;
-    document.querySelector('#comment_create_form_' + reviewId).style.display = 'none';
+  document.querySelector('#comment_create_cancel_btn_<%= @review.id %>').addEventListener('click', function(e){
+    document.querySelector('#comment_create_form_<%= @review.id %>').style.display = 'none';
 
     createBtn.style.display = 'block';
   })

@@ -57,6 +57,32 @@ feature 'User can create comments', "
       click_on 'Cancel'
       expect(page).to_not have_css '.comment_create_form'
     end
+
+    scenario 'tries to comment on two reviews' do
+      other_user = FactoryBot.create(:user, id: 100)
+      FactoryBot.create(:purchase, game: game, owner: other_user)
+      other_review = FactoryBot.create(:review, author: other_user, game: game)
+
+      visit game_path(game)
+
+      within "#review_#{review.id}" do
+        click_on 'Leave a comment'
+        comment_text = 'Agreed. Game deserves a high score.'
+        fill_in 'text', with: comment_text
+        click_on 'Publish'
+
+        expect(page).to have_content comment_text
+      end
+
+      within "#review_#{other_review.id}" do
+        click_on 'Leave a comment'
+        comment_text = "You're wrong"
+        fill_in 'text', with: comment_text
+        click_on 'Publish'
+
+        expect(page).to have_content comment_text
+      end
+    end
   end
 
   describe 'Unauthenticated user' do
