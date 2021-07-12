@@ -15,8 +15,8 @@ RSpec.describe Review, type: :model do
   describe '#one_reviewer' do
     it 'adds error if user has more than one review to one game' do
       FactoryBot.create(:review, author: user, game: game)
-      excess_review = FactoryBot.create(:review, author: user, game: game)
-      expect(excess_review.persisted?).to be_falsey
+      excess_review = Review.new(author: user, game: game, text: 'Interesting plot', rate: 1)
+      expect(excess_review.save).to be_falsey
     end
   end
 end
