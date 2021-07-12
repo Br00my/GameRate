@@ -19,6 +19,7 @@ feature 'User can create comments', "
     scenario 'tries to create one comment on a review with valid attributes' do
       visit game_path(game)
 
+      click_on 'Leave a comment'
       comment_text = 'Agreed. Game deserves a high score.'
 
       fill_in 'text', with: comment_text
@@ -31,6 +32,7 @@ feature 'User can create comments', "
     scenario 'tries to create comment on a review with invalid attributes' do
       visit game_path(game)
 
+      click_on 'Leave a comment'
       fill_in 'text', with: ''
       click_on 'Publish'
 
@@ -45,6 +47,14 @@ feature 'User can create comments', "
 
       visit game_path(other_game)
 
+      expect(page).to_not have_css '.comment_create_form'
+    end
+
+    scenario 'tries to cancel comment creation' do
+      visit game_path(game)
+
+      click_on 'Leave a comment'
+      click_on 'Cancel'
       expect(page).to_not have_css '.comment_create_form'
     end
   end

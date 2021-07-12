@@ -12,6 +12,7 @@ feature 'User can view reviews', "
 
   scenario 'User tries to view reviews of specific game' do
     visit game_path(game)
+    
     expect(find('.review_rate')[:style]).to eq '--rating: 1;'
     expect(page).to have_content review.text
   end
