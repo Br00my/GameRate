@@ -11,6 +11,7 @@
 
       = button_to 'Delete', game_review_path(@game, review), method: :delete, remote: true
 
-    = render 'comments/create_form', review: review
+    - if current_user.owns?(review.game)
+      = render 'comments/create_form', review: review
 
   .comments id="comments_#{review.id}" = render review.comments

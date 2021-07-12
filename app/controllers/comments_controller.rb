@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
   before_action :set_review, only: %i[create]
 
   def create
+    return unless current_user.owns?(@review.game)
+
     @comment = Comment.new(comment_params.merge({ review: @review, author: current_user }))
 
     if @comment.save

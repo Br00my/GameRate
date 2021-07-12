@@ -36,6 +36,17 @@ feature 'User can create comments', "
 
       expect(page).to have_content 'Your comment was not published. Text can not be empty.'
     end
+
+    scenario 'tries to create comment on a review to game he does not own' do
+      other_user = FactoryBot.create(:user, id: 100)
+      other_game = FactoryBot.create(:game)
+      FactoryBot.create(:purchase, game: other_game, owner: other_user)
+      other_review = FactoryBot.create(:review, author: other_user, game: other_game)
+
+      visit game_path(other_game)
+
+      expect(page).to_not have_css '.comment_create_form'
+    end
   end
 
   describe 'Unauthenticated user' do

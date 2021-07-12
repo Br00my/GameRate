@@ -4,7 +4,7 @@ class ReviewsController < ApplicationController
   before_action :set_review, only: %i[update destroy]
 
   def create
-    return if current_user.reviewed?(@game)
+    return if current_user.reviewed?(@game) || !current_user.owns?(@game)
 
     @review = Review.new(review_params.merge({ game: @game, author: current_user }))
 
