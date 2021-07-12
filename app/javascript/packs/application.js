@@ -9,6 +9,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
 require("channels/reviews")
+require("channels/comments")
 
 Rails.start()
 Turbolinks.start()

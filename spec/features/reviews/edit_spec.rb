@@ -22,8 +22,10 @@ feature 'User can edit reviews', "
         click_on 'Edit'
         review_text = 'Versatile gameplay and interesting plot'
         find('#star5').click
-        fill_in 'text', with: review_text
-        click_on 'Edit'
+        within '.review_edit_form' do
+          fill_in 'text', with: review_text
+          click_on 'Edit'
+        end
         within '.review' do
           expect(find('.review_rate')[:style]).to eq '--rating: 5;'
           expect(page).to have_content review_text
@@ -33,8 +35,10 @@ feature 'User can edit reviews', "
       scenario 'tries to edit review with invalid attributes' do
         click_on 'Edit'
         find('#star5').click
-        fill_in 'text', with: ''
-        click_on 'Edit'
+        within '.review_edit_form' do
+          fill_in 'text', with: ''
+          click_on 'Edit'
+        end
         expect(page).to have_content 'Your review was not edited. Both star rate and text are needed.'
       end
 
@@ -62,6 +66,6 @@ feature 'User can edit reviews', "
   scenario 'Unauthenticated user tries to publish review' do
     visit game_path(game)
 
-    expect(page).to_not have_selector '.review_edit_form'
+    expect(page).to_not have_css '.review_edit_form'
   end
 end

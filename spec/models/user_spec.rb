@@ -5,6 +5,7 @@ RSpec.describe User, type: :model do
   it { should have_many :purchases }
   it { should have_many(:games) }
   it { should have_many :comments }
+  it { should have_many :reviews }
 
   let(:author) { create(:user) }
   let(:game) { create(:game) }

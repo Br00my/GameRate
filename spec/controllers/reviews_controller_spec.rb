@@ -23,7 +23,15 @@ RSpec.describe ReviewsController, type: :controller do
         
         it 'does not create more than one review for one author' do
           FactoryBot.create(:review, author: purchase.owner, game: purchase.game)
-          expect { post :create, params: { review: { rate: nil, text: 'Fun to play' }, game_id: purchase.game, format: :js } }.to_not change(Review, :count)
+          expect { post :create, params: { review: { rate: 5, text: 'Fun to play' }, game_id: purchase.game, format: :js } }.to_not change(Review, :count)
+        end
+
+        it 'does not create review if user does not own game' do
+          other_user = FactoryBot.create(:user, id: 100)
+          other_game = FactoryBot.create(:game)
+          FactoryBot.create(:purchase, game: other_game, owner: other_user)
+
+          expect { post :create, params: { review: { rate: 5, text: 'Fun to play' }, game_id: other_game, format: :js } }.to_not change(Review, :count)
         end
       end
 
