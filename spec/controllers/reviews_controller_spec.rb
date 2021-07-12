@@ -55,7 +55,7 @@ RSpec.describe ReviewsController, type: :controller do
       
       context 'valid attributes' do
         it 'updates review update review' do
-          patch :update, params: { review: { rate: 5, text: 'Good plot' }, game_id: purchase.game, id: review, format: :js }
+          patch :update, params: { review: { rate: 5, text: 'Good plot' }, id: review, format: :js }
           review.reload
 
           expect(review.rate).to eq 5
@@ -63,14 +63,14 @@ RSpec.describe ReviewsController, type: :controller do
         end
 
         it 'renders update' do
-          patch :update, params: { review: { rate: 5, text: 'Good plot' }, game_id: purchase.game, id: review, format: :js }
+          patch :update, params: { review: { rate: 5, text: 'Good plot' }, id: review, format: :js }
 
           expect(response).to render_template :update
         end
       end
 
       it 'updates review with invalid attributes' do
-        patch :update, params: { review: { rate: nil, text: 'Good plot' }, game_id: purchase.game, id: review, format: :js }
+        patch :update, params: { review: { rate: nil, text: 'Good plot' }, id: review, format: :js }
         review.reload
 
         expect(review.rate).to_not eq 5
@@ -82,7 +82,7 @@ RSpec.describe ReviewsController, type: :controller do
         FactoryBot.create(:purchase, owner: other_user, game: purchase.game)
         other_review = FactoryBot.create(:review, author: other_user, game: purchase.game)
 
-        patch :update, params: { review: { rate: 5, text: 'Good plot' }, game_id: purchase.game, id: other_review, format: :js }
+        patch :update, params: { review: { rate: 5, text: 'Good plot' }, id: other_review, format: :js }
         review.reload
 
         expect(other_review.text).to_not eq 'Good plot'
@@ -91,7 +91,7 @@ RSpec.describe ReviewsController, type: :controller do
 
     context 'unauthenticated user' do
       it 'does not update review' do
-        patch :update, params: { review: { rate: 5, text: 'Good plot' }, game_id: purchase.game, id: review, format: :js }
+        patch :update, params: { review: { rate: 5, text: 'Good plot' }, id: review, format: :js }
         review.reload
 
         expect(review.rate).to_not eq 5
@@ -107,11 +107,11 @@ RSpec.describe ReviewsController, type: :controller do
       before { login(purchase.owner) }
       
       it 'deletes review' do
-        expect { delete :destroy, params: { game_id: purchase.game, id: review, format: :js } }.to change(Review, :count).by(-1)
+        expect { delete :destroy, params: { id: review, format: :js } }.to change(Review, :count).by(-1)
       end
 
       it 'renders destroy' do
-        delete :destroy, params: { game_id: purchase.game, id: review, format: :js }
+        delete :destroy, params: { id: review, format: :js }
 
         expect(response).to render_template :destroy
       end
@@ -121,13 +121,13 @@ RSpec.describe ReviewsController, type: :controller do
         FactoryBot.create(:purchase, owner: other_user, game: purchase.game)
         other_review = FactoryBot.create(:review, author: other_user, game: purchase.game)
 
-        expect { delete :destroy, params: { game_id: purchase.game, id: other_review, format: :js } }.to_not change(Review, :count)
+        expect { delete :destroy, params: { id: other_review, format: :js } }.to_not change(Review, :count)
       end
     end
 
     context 'unauthenticated user' do
       it 'does not delete review' do
-        expect { delete :destroy, params: { game_id: purchase.game, id: review, format: :js } }.to_not change(Review, :count)
+        expect { delete :destroy, params: { id: review, format: :js } }.to_not change(Review, :count)
       end
     end
   end

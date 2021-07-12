@@ -3,7 +3,7 @@ class Game < ApplicationRecord
 
   has_many :purchases
   has_many :owners, through: :purchases
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
 
   def rate
     rate_sum = 0

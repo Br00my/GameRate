@@ -1,19 +1,25 @@
 document.addEventListener('turbolinks:load', function(){
-  var createBtn = document.querySelector('.comment_create_btn');
+  var createBtns = document.querySelectorAll('.comment_create_btn');
 
-  if (createBtn == null) { return; }
-
-  var reviewId = createBtn.dataset.review_id;
+  if (createBtns.length == 0) { return; }
   
-  createBtn.addEventListener('click', function(e){
-    e.target.style.display = 'none';
+  createBtns.forEach(createBtn => {
+    createBtn.addEventListener('click', function(e){
+      e.target.style.display = 'none';
 
-    document.querySelector('#comment_create_form_' + reviewId).style.display = 'block';
+      var reviewId = e.target.dataset.review_id;
+      document.querySelector('#comment_create_form_' + reviewId).style.display = 'block';
+    })
   })
 
-  document.querySelector('.comment_create_cancel_btn').addEventListener('click', function(){
-    document.querySelector('#comment_create_form_' + reviewId).style.display = 'none';
+  var createCancelBtns = document.querySelectorAll('.comment_create_cancel_btn');
 
-    createBtn.style.display = 'block';
+  createCancelBtns.forEach(createCancelBtn => {
+    createCancelBtn.addEventListener('click', function(){
+      var reviewId = createCancelBtn.dataset.review_id;
+      document.querySelector('#comment_create_form_' + reviewId).style.display = 'none';
+
+      document.querySelector('#comment_create_btn_' + reviewId).style.display = 'block';
+    })
   })
 })

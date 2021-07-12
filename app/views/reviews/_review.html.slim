@@ -9,7 +9,7 @@
 
       = render 'reviews/edit_form', review: review
 
-      = button_to 'Delete', game_review_path(@game, review), method: :delete, remote: true
+      = button_to 'Delete', review_path(review), method: :delete, remote: true
 
     - if current_user.owns?(review.game)
       input.comment_create_btn id="comment_create_btn_#{review.id}" type='button' value='Leave a comment' data-review_id="#{review.id}"
