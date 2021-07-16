@@ -4,7 +4,10 @@ class ReviewsController < ApplicationController
   before_action :set_review, only: %i[update destroy]
 
   def create
-    return if current_user.reviewed?(@game) || !current_user.owns?(@game)
+    if current_user.reviewed?(@game) || !current_user.owns?(@game)
+      flash.now[:alert] = 'You have already reviewed the game or do not own it'
+      return
+    end
 
     @review = Review.new(review_params.merge({ game: @game, author: current_user }))
 
@@ -16,7 +19,10 @@ class ReviewsController < ApplicationController
   end
 
   def update
-    return unless current_user == @review.author
+    unless current_user.review_author?(@review)
+      flash.now[:alert] = 'Review does not belong to you'
+      return
+    end
 
     if @review.update(review_params)
       flash.now[:notice] = 'Your review was successfully edited.'
@@ -26,7 +32,10 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    return unless current_user == @review.author
+    unless current_user.review_author?(@review)
+      flash.now[:alert] = 'Review does not belong to you'
+      return
+    end
 
     @review.destroy
     flash.now[:notice] = 'Your review was successfully deleted.'

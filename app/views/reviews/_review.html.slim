@@ -4,7 +4,7 @@
     .review_text = review.text
 
   - if user_signed_in?
-    - if current_user == review.author
+    - if current_user.review_author?(review)
       input.review_edit_btn type='button' value='Edit' data-review_id="#{review.id}"
 
       = render 'reviews/edit_form', review: review
