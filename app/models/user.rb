@@ -9,7 +9,7 @@ class User < ApplicationRecord
   validates :username, presence: true
 
   def reviewed?(game)
-    reviews.any?{ |review| review.game == game }
+    reviews.exists?(user_id: id)
   end
 
   def owns?(game)
