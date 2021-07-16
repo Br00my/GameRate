@@ -1,5 +1,11 @@
 .nav
   - if user_signed_in?
     = link_to 'Sign out', users_sign_out_path, method: :delete
+
+    .update
+      = link_to 'Look for new games and update playtime', games_update_list_path(current_user), method: :post
+
   - else
     = link_to 'Sign in', user_steam_omniauth_authorize_path, method: :post
+
+  = link_to 'GameRate', root_path

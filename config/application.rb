@@ -20,5 +20,6 @@ module GameRate
     # config.eager_load_paths << Rails.root.join("extras")
     Steam.apikey = Rails.application.credentials[Rails.env.to_sym][:steam][:key]
     config.autoload_paths += Dir[Rails.root.join('app')]
+    config.active_job.queue_adapter = :sidekiq
   end
 end

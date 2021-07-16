@@ -1,6 +1,4 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
-  skip_forgery_protection with: :null_session
-
   def steam
     @user = User.find_by(id: auth[:uid])
 

@@ -23,4 +23,13 @@ feature 'User can view owned games', "
       expect(page).to have_content 'Make your account public'
     end
   end
+
+  scenario 'User treies to view specific game', js: true do
+    game = FactoryBot.create(:game)
+    visit root_path
+
+    find('.game').click
+    expect(page).to have_content game.title
+    expect(page).to have_content game.genres
+  end
 end
