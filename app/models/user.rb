@@ -15,4 +15,12 @@ class User < ApplicationRecord
   def owns?(game)
     games.include?(game)
   end
+
+  def review_author?(review)
+    review.author.id == id
+  end
+
+  def comment_author?(comment)
+    comment.author.id == id
+  end
 end

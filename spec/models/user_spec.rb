@@ -7,33 +7,45 @@ RSpec.describe User, type: :model do
   it { should have_many :comments }
   it { should have_many :reviews }
 
-  let(:author) { create(:user) }
+  let(:user) { create(:user) }
   let(:game) { create(:game) }
 
-  before { FactoryBot.create(:purchase, owner: author, game: game) }
+  before { FactoryBot.create(:purchase, owner: user, game: game) }
 
   describe '#reviewed?' do
     it 'returns true if user has reviewed the game' do
-      FactoryBot.create(:review, author: author, game: game)
-      expect(author.reviewed?(game)).to be_truthy
+      FactoryBot.create(:review, author: user, game: game)
+      expect(user.reviewed?(game)).to be_truthy
     end
 
     it 'returns false if user has not reviewed the game' do
-      expect(author.reviewed?(game)).to be_falsey
+      expect(user.reviewed?(game)).to be_falsey
     end
   end
 
   describe '#owns?' do
     it 'returns true if user owns game' do
-      expect(author.owns?(game)).to be_truthy
+      expect(user.owns?(game)).to be_truthy
     end
 
     it 'returns false if user does not own game' do
-      other_author = FactoryBot.create(:user, id: 100)
+      other_user = FactoryBot.create(:user, id: 100)
       other_game = FactoryBot.create(:game)
-      FactoryBot.create(:purchase, owner: other_author, game: other_game)
+      FactoryBot.create(:purchase, owner: other_user, game: other_game)
 
-      expect(author.owns?(other_game)).to be_falsey
+      expect(user.owns?(other_game)).to be_falsey
+    end
+  end
+
+  describe '#review_author?' do
+    let!(:review) { create(:review, author: user, game: game) }
+    it 'returns true if review belongs to user' do
+      expect(user.review_author?(review)).to be_truthy
+    end
+
+    it 'returns false if reviewdoes not belong to user' do
+      other_user = FactoryBot.create(:user, id: 100)
+      expect(other_user.review_author?(review)).to be_falsey
     end
   end
 end

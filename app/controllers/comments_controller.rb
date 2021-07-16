@@ -3,7 +3,10 @@ class CommentsController < ApplicationController
   before_action :set_review, only: %i[create]
 
   def create
-    return unless current_user.owns?(@review.game)
+    unless current_user.owns?(@review.game)
+      flash.now[:alert] = 'You should own the game'
+      return
+    end
 
     @comment = Comment.new(comment_params.merge({ review: @review, author: current_user }))
 

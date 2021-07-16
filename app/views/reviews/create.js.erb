@@ -1,6 +1,6 @@
 document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/flash' %>");
 
-<% if @review.persisted? %>
+<% if @review&.persisted? %>
   document.querySelector('.reviews').innerHTML += '<%= j render @review %>';
   document.querySelector('.review_create_form').style.display = 'none';
 
