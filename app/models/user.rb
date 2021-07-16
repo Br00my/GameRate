@@ -13,7 +13,7 @@ class User < ApplicationRecord
   end
 
   def owns?(game)
-    games.include?(game)
+    games.exists?(id: game.id)
   end
 
   def review_author?(review)
