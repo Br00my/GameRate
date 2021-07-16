@@ -6,12 +6,6 @@ class Game < ApplicationRecord
   has_many :reviews, dependent: :destroy
 
   def rate
-    rate_sum = 0
-    multiplier_sum = 0
-    reviews.each do |review|
-      rate_sum += review.rate * review.multiplier
-      multiplier_sum += review.multiplier
-    end
-    (rate_sum.to_f / multiplier_sum).round(1)
+    (reviews.sum('multiplier * rate').to_f / reviews.sum(:multiplier)).round(1)
   end
 end

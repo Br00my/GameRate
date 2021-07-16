@@ -1,6 +1,6 @@
 document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/flash' %>");
 
-<% if @review.errors.empty? %>
+<% if @review&.errors.empty? %>
   document.querySelector('.review_edit_form').style.display = 'none';
   document.querySelector('.review_edit_btn').style.display = 'block';
   document.querySelector('#review_data_<%= @review.id %>').querySelector('.review_rate').style.cssText = '--rating: <%= @review.rate %>;';
