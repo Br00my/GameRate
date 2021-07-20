@@ -5,10 +5,10 @@ feature 'User can create comments', "
   I'd like to create comment
 " do
 
-  given(:user){ create(:user) }
-  given(:game){ create(:game) }
-  given!(:purchase){ create(:purchase, game: game, owner: user) }
-  given!(:review){ create(:review, author: user, game: game) }
+  given(:user) { create(:user) }
+  given(:game) { create(:game) }
+  given!(:purchase) { create(:purchase, game: game, owner: user) }
+  given!(:review) { create(:review, author: user, game: game) }
 
   describe 'Authenticated user', js: true do
     background do

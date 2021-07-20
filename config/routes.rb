@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :games, only: %i[index show] do
     resources :reviews, only: %i[create update destroy], shallow: true do
-      resources :comments, only: %i[create]
+      resources :comments, only: %i[create destroy]
     end
   end
 

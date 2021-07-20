@@ -19,7 +19,7 @@ class Review < ApplicationRecord
   end
 
   def one_reviewer
-    if game.reviews.any? { |review| review.author == author }
+    if game.reviews.exists?(user_id: author.id)
       errors.add('User can have only one review to each game')
     end
   end
