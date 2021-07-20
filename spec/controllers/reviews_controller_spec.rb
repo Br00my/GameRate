@@ -53,20 +53,12 @@ RSpec.describe ReviewsController, type: :controller do
     context 'authenticated user' do
       before { login(purchase.owner) }
       
-      context 'valid attributes' do
-        it 'updates review update review' do
-          patch :update, params: { review: { rate: 5, text: 'Good plot' }, id: review, format: :js }
-          review.reload
+      it 'updates review with valid attributes' do
+        patch :update, params: { review: { rate: 5, text: 'Good plot' }, id: review, format: :js }
+        review.reload
 
-          expect(review.rate).to eq 5
-          expect(review.text).to eq 'Good plot'
-        end
-
-        it 'renders update' do
-          patch :update, params: { review: { rate: 5, text: 'Good plot' }, id: review, format: :js }
-
-          expect(response).to render_template :update
-        end
+        expect(review.rate).to eq 5
+        expect(review.text).to eq 'Good plot'
       end
 
       it 'updates review with invalid attributes' do
@@ -75,6 +67,12 @@ RSpec.describe ReviewsController, type: :controller do
 
         expect(review.rate).to_not eq 5
         expect(review.text).to_not eq 'Good plot'
+      end
+
+      it 'renders update' do
+        patch :update, params: { review: { rate: 5, text: 'Good plot' }, id: review, format: :js }
+
+        expect(response).to render_template :update
       end
 
       it "does not update other user's review" do

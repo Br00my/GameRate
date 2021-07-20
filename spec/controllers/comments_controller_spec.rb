@@ -73,4 +73,43 @@ RSpec.describe CommentsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    let!(:comment) { create(:comment, review: review, author: user) }
+    context 'authenticated user' do
+      before { login(user) }
+      it 'updates comment with calid attributes' do
+        patch :update, params: { comment: { text: 'You are wrong' }, id: comment, format: :js }
+        comment.reload
+
+        expect(comment.text).to eq 'You are wrong'
+      end
+
+      it 'does not update comment with invalid attributes' do
+        patch :update, params: { comment: { text: '' }, id: comment, format: :js }
+        comment.reload
+
+        expect(comment.text).to_not eq ''
+      end
+
+      it 'renders update' do
+        patch :update, params: { comment: { text: 'You are wrong' }, id: comment, format: :js }
+
+        expect(response).to render_template :update
+      end
+
+      it "does not update other user's comment" do
+        other_user = FactoryBot.create(:user, id: 100)
+        other_comment = FactoryBot.create(:comment, author: other_user, review: review)
+
+        patch :update, params: { comment: { text: 'You are wrong' }, id: other_comment, format: :js }
+      end
+    end
+
+    context 'unauthenticated user' do
+      it 'does not update comment' do
+        expect { patch :update, params: { comment: { text: 'you are wrong' }, id: comment, format: :js } }.to_not change(Comment, :count)
+      end
+    end
+  end
 end
