@@ -1,5 +1,10 @@
 .comment id="comment_#{comment.id}"
-  = comment.text
+  .comment_data id="comment_data_#{comment.id}"
+    .comment_text= comment.text
 
   - if user_signed_in? && current_user.comment_author?(comment)
+    input.comment_edit_btn id="comment_edit_btn_#{comment.id}" type='button' value='Edit' data-comment_id="#{comment.id}"
+
+    = render 'comments/edit_form', comment: comment
+
     = button_to 'Delete', comment_path(comment), method: :delete, remote: true

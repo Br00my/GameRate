@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: %i[create destroy]
+  before_action :authenticate_user!, only: %i[create destroy update]
   before_action :set_review, only: %i[create]
-  before_action :set_comment, only: %i[destroy]
+  before_action :set_comment, only: %i[destroy update]
 
   def create
     unless current_user.owns?(@review.game)
@@ -26,6 +26,19 @@ class CommentsController < ApplicationController
 
     @comment.destroy
     flash.now[:notice] = 'Your comment was successfully deleted.'
+  end
+
+  def update
+    unless current_user.comment_author?(@comment)
+      flash.now[:alert] = 'Comment does not belong to you'
+      return
+    end
+
+    if @comment.update(comment_params)
+      flash.now[:notice] = 'Your comment was successfully edited.'
+    else
+      flash.now[:alert] = 'Your comment was not edited. Text can not be blank.'
+    end
   end
 
   private

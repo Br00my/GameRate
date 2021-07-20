@@ -7,9 +7,9 @@ class Review < ApplicationRecord
 
   validates :text, :rate, :multiplier, presence: true
   validates :rate, length: { in: 1..5 }
-  validate :one_reviewer
+  validate :one_reviewer, on: :create
 
-  before_validation :set_multiplier
+  before_validation :set_multiplier, on: :create
 
   private
 
