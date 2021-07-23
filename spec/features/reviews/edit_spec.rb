@@ -60,6 +60,34 @@ feature 'User can edit reviews', "
           expect(page).to_not have_content 'Edit'
         end
       end
+
+      describe 'multiple sessions' do
+        scenario 'tries to edit review' do
+          Capybara.using_session :user do
+            visit root_path
+            click_on 'Sign in'
+            visit game_path(game)
+          end
+
+          Capybara.using_session :user2 do
+            visit game_path(game)
+          end
+
+          review_text = 'Versatile gameplay and interesting plot'
+          Capybara.using_session :user do
+            click_on 'Edit'
+            find('#star5').click
+            within '.review_edit_form' do
+              fill_in 'text', with: review_text
+              click_on 'Edit'
+            end
+          end
+
+          Capybara.using_session :user2 do
+            expect(page).to have_content review_text
+          end
+        end
+      end
     end
   end
 

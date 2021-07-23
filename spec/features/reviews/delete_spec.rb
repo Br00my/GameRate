@@ -30,4 +30,26 @@ feature 'User can delete review', "
       expect(page).to_not have_content 'Delete'
     end
   end
+
+  describe 'multiple sessions' do
+    scenario 'User tries to delete his review', js: true do
+      Capybara.using_session :user do
+        visit root_path
+        click_on 'Sign in'
+        visit game_path(game)
+      end
+
+      Capybara.using_session :user2 do
+        visit game_path(game)
+      end
+
+      Capybara.using_session :user do
+        click_on 'Delete'
+      end
+
+      Capybara.using_session :user2 do
+        expect(page).to_not have_content review.text
+      end
+    end
+  end
 end

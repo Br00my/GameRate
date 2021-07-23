@@ -1,7 +1,5 @@
 .review id="review_#{review.id}"
-  .review_data id="review_data_#{review.id}"
-    .stars.review_rate style="--rating: #{review.rate};"
-    .review_text = review.text
+  = render 'reviews/data', review: review
 
   - if user_signed_in?
     - if current_user.review_author?(review)
@@ -12,8 +10,6 @@
       = button_to 'Delete', review_path(review), method: :delete, remote: true
 
     - if current_user.owns?(review.game)
-      input.comment_create_btn id="comment_create_btn_#{review.id}" type='button' value='Leave a comment' data-review_id="#{review.id}"
-
-      = render 'comments/create_form', review: review
+      .create_window= render 'comments/create_window', review: review
 
   .comments id="comments_#{review.id}" = render review.comments

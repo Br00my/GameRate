@@ -14,7 +14,7 @@ document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/fla
   })
 
   document.querySelector('#comment_edit_cancel_btn_<%= @comment.id %>').addEventListener('click', function(e){
-    var commentId = editCancelBtn.dataset.comment_id;
+    var commentId = e.target.dataset.comment_id;
     document.querySelector('#comment_edit_form_' + commentId).style.display = 'none';
 
     document.querySelector('#comment_edit_btn_' + commentId).style.display = 'block';

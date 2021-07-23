@@ -55,6 +55,31 @@ feature 'User can create reviews', "
 
       expect(page).to_not have_css '.review_create_form'
     end
+
+    describe 'multiple sessions' do
+      scenario 'tries to publish review' do
+        Capybara.using_session :user do
+          visit root_path
+          click_on 'Sign in'
+          visit game_path(game)
+        end
+
+        Capybara.using_session :user2 do
+          visit game_path(game)
+        end
+
+        review_text = 'Versatile gameplay and interesting plot'
+        Capybara.using_session :user do
+          find('#star5').click
+          fill_in 'text', with: review_text
+          click_on 'Publish'
+        end
+
+        Capybara.using_session :user2 do
+          expect(page).to have_content review_text
+        end
+      end
+    end
   end
 
   scenario 'Unauthenticated user tries to publish review' do

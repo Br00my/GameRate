@@ -22,6 +22,7 @@ gem 'steam-api'
 gem 'activerecord-session_store'
 gem 'sidekiq'
 gem 'whenever', require: false
+gem 'gon'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

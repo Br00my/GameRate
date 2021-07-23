@@ -12,6 +12,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params.merge({ review: @review, author: current_user }))
 
     if @comment.save
+      publish
       flash.now[:notice] = 'Your comment was successfully published.'
     else
       flash.now[:alert] = 'Your comment was not published. Text can not be empty.'
@@ -25,6 +26,7 @@ class CommentsController < ApplicationController
     end
 
     @comment.destroy
+    destroy_published
     flash.now[:notice] = 'Your comment was successfully deleted.'
   end
 
@@ -35,6 +37,7 @@ class CommentsController < ApplicationController
     end
 
     if @comment.update(comment_params)
+      update_published
       flash.now[:notice] = 'Your comment was successfully edited.'
     else
       flash.now[:alert] = 'Your comment was not edited. Text can not be blank.'
@@ -42,6 +45,36 @@ class CommentsController < ApplicationController
   end
 
   private
+
+  def destroy_published
+    ActionCable.server.broadcast(
+      'comments',
+      action: :destroy,
+      comment_id: @comment.id,
+      user_id: current_user.id
+      )
+  end
+
+  def update_published
+    ActionCable.server.broadcast(
+      'comments',
+      action: :update,
+      comment_id: @comment.id,
+      comment_text: @comment.text,
+      user_id: current_user.id
+      )
+  end
+
+  def publish
+    ActionCable.server.broadcast(
+      'comments',
+      action: :create,
+      comment_id: @comment.id,
+      comment_text: @comment.text,
+      review_id: @comment.review.id,
+      user_id: current_user.id
+      )
+  end
 
   def set_comment
     @comment = Comment.find(params[:id])
