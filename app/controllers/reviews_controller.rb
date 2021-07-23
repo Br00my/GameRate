@@ -12,6 +12,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params.merge({ game: @game, author: current_user }))
 
     if @review.save
+      publish
       flash.now[:notice] = 'Your review was successfully published.'
     else
       flash.now[:alert] = 'Your review was not published. Both star rate and text are needed.'
@@ -25,6 +26,7 @@ class ReviewsController < ApplicationController
     end
 
     if @review.update(review_params)
+      update_published
       flash.now[:notice] = 'Your review was successfully edited.'
     else
       flash.now[:alert] = 'Your review was not edited. Both star rate and text are needed.'
@@ -38,10 +40,47 @@ class ReviewsController < ApplicationController
     end
 
     @review.destroy
+    destroy_published
     flash.now[:notice] = 'Your review was successfully deleted.'
   end
 
   private
+
+  def update_published
+    ActionCable.server.broadcast(
+      'reviews',
+      action: :update,
+      review_partial: render_to_string(partial: 'reviews/data', locals: { review: @review }),
+      review_id: @review.id,
+      stars_partial: render_to_string(partial: 'games/stars', locals: { game_rate: @review.game.rate }),
+      game_id: @review.game.id,
+      user_id: current_user.id
+      )
+  end
+  
+  def destroy_published
+    ActionCable.server.broadcast(
+      'reviews',
+      action: :destroy,
+      review_id: @review.id,
+      stars_partial: render_to_string(partial: 'games/stars', locals: { game_rate: @review.game.rate }),
+      game_id: @review.game.id,
+      user_id: current_user.id
+      )
+  end
+
+  def publish
+    ActionCable.server.broadcast(
+      'reviews',
+      action: :create,
+      review_partial: render_to_string(partial: 'reviews/data', locals: { review: @review }),
+      review_id: @review.id,
+      game_stars_partial: render_to_string(partial: 'games/stars', locals: { game_rate: @review.game.rate }),
+      game_id: @review.game.id,
+      comment_create_window_partial: render_to_string(partial: 'comments/create_window', locals: { review: @review }),
+      user_id: current_user.id
+      )
+  end
 
   def review_params
     params.require(:review).permit(:text, :rate)

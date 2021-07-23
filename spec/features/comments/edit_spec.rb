@@ -19,14 +19,15 @@ feature 'User can edit reviews', "
     end
 
     scenario 'tries to edit comment with valid attributes' do
+      comment_text = 'You are wrong'
       within '.comment' do
         click_on 'Edit'
-        fill_in 'text', with: 'You are wrong'
+        fill_in 'text', with: comment_text
         click_on 'Edit'
       end
 
       expect(page).to have_content 'Your comment was successfully edited.'
-      expect(page).to have_content 'You are wrong'
+      expect(page).to have_content comment_text
     end
 
     scenario 'tries to edit comment with invalid attributes' do
@@ -55,6 +56,33 @@ feature 'User can edit reviews', "
 
       within "#comment_#{other_comment.id}" do
         expect(page).to_not have_content 'Edit'
+      end
+    end
+
+    describe 'multiple sessions' do
+      scenario 'tries to edit comment' do
+        Capybara.using_session :user do
+          visit root_path
+          click_on 'Sign in'
+          visit game_path(game)
+        end
+
+        Capybara.using_session :user2 do
+          visit game_path(game)
+        end
+
+        comment_text = 'You are wrong'
+        Capybara.using_session :user do
+          within '.comment' do
+            click_on 'Edit'
+            fill_in 'text', with: comment_text
+            click_on 'Edit'
+          end
+        end
+
+        Capybara.using_session :user2 do
+          expect(page).to have_content comment_text
+        end
       end
     end
   end

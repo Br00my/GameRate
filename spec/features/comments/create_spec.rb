@@ -83,6 +83,32 @@ feature 'User can create comments', "
         expect(page).to have_content comment_text
       end
     end
+
+    describe 'multiple sessions' do
+      scenario 'tries to create comment' do
+        Capybara.using_session :user do
+          visit root_path
+          click_on 'Sign in'
+          visit game_path(game)
+        end
+
+        Capybara.using_session :user2 do
+          visit game_path(game)
+        end
+
+        comment_text = 'Agreed. Game deserves a high score.'
+        Capybara.using_session :user do
+          click_on 'Leave a comment'
+
+          fill_in 'text', with: comment_text
+          click_on 'Publish'
+        end
+
+        Capybara.using_session :user2 do
+          expect(page).to have_content comment_text
+        end
+      end
+    end
   end
 
   describe 'Unauthenticated user' do

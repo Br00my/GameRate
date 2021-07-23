@@ -1,4 +1,40 @@
+import consumer from "./consumer"
+
 document.addEventListener('turbolinks:load', function(){
+  if (document.querySelector('.reviews') == null) { return; }
+
+  consumer.subscriptions.create('CommentsChannel', {
+    connected(){
+      this.perform('follow');
+    },
+
+    received(data){
+      if (gon.user_id == data.user_id) { return; }
+
+      switch (data.action) {
+        case 'create':
+          var comment = document.createElement('div');
+          comment.classList.add('comment');
+          comment.id = 'comment_' + data.comment_id;
+          var commentText = document.createElement('div');
+          commentText.classList.add('comment_text');
+          commentText.id = 'comment_text_' + data.comment_id;
+          commentText.innerHTML = data.comment_text;
+          comment.appendChild(commentText);
+          var comments = document.querySelector('#review_' + data.review_id + ' .comments');
+          comments.appendChild(comment);
+          break;
+        case 'update':
+          document.querySelector('#comment_text_' + data.comment_id).textContent = data.comment_text;
+          break;
+        case 'destroy':
+          var comment = document.querySelector('#comment_' + data.comment_id);
+          comment.parentNode.removeChild(comment);
+          break;
+      }
+    }
+  })
+
   var createBtns = document.querySelectorAll('.comment_create_btn');
   
   createBtns.forEach(createBtn => {

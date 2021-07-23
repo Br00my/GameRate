@@ -15,6 +15,7 @@ class GamesController < ApplicationController
 
   def show
     @reviews = @game.reviews
+    gon.owns_game = current_user&.owns?(@game)
   end
 
   private
