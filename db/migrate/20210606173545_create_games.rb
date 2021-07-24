@@ -4,7 +4,7 @@ class CreateGames < ActiveRecord::Migration[6.1]
       t.string :title, null: false
       t.string :picture, null: false
       t.string :genres, null: false
-      t.float :rate
+      t.float :rate, default: 0.0
 
       t.timestamps
     end
