@@ -129,8 +129,11 @@ GEM
     hashie (4.1.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
+    innertube (1.1.0)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
+    joiner (0.6.0)
+      activerecord (>= 6.1.0)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -141,12 +144,14 @@ GEM
       mini_mime (>= 0.1.1)
     marcel (1.0.1)
     method_source (1.0.0)
+    middleware (0.1.0)
     mini_mime (1.0.3)
     mini_portile2 (2.5.3)
     minitest (5.14.4)
     msgpack (1.4.2)
     multi_json (1.15.0)
     multipart-post (2.1.1)
+    mysql2 (0.5.3)
     nio4r (2.5.7)
     nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
@@ -223,6 +228,7 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    riddle (2.4.2)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -288,6 +294,13 @@ GEM
     steam-api (1.2.0)
       faraday (~> 1.0)
     temple (0.8.2)
+    thinking-sphinx (5.2.0)
+      activerecord (>= 4.2.0)
+      builder (>= 2.1.2)
+      innertube (>= 1.0.2)
+      joiner (>= 0.3.4)
+      middleware (>= 0.1.0)
+      riddle (~> 2.3)
     thor (1.1.0)
     tilt (2.0.10)
     turbolinks (5.2.1)
@@ -334,6 +347,7 @@ DEPENDENCIES
   gon
   jbuilder (~> 2.7)
   listen (~> 3.3)
+  mysql2
   omniauth
   omniauth-rails_csrf_protection
   omniauth-steam
@@ -352,6 +366,7 @@ DEPENDENCIES
   spring
   sqlite3 (~> 1.4)
   steam-api
+  thinking-sphinx
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
