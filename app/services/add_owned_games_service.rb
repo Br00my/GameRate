@@ -8,6 +8,8 @@ class AddOwnedGamesService
     return if games.nil?
 
     games.each do |game|
+      next unless Steam::Store.app_details(game['appid'])
+
       game = SteamGameCov.new(game['appid'], game['name'], game['img_logo_url'], game['playtime_forever'])
 
       next unless game.success?

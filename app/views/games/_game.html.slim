@@ -2,4 +2,4 @@
   = game.title
   = image_tag game.picture
   = game.genres
-  .game_rate= render 'games/stars', game_rate: game.rate
+  .game_rate= render 'games/stars', game_rate: game.rate || 0.0

@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2021_07_11_122529) do
     t.string "title", null: false
     t.string "picture", null: false
     t.string "genres", null: false
+    t.float "rate", default: 0.0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

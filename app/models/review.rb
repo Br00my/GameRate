@@ -11,7 +11,14 @@ class Review < ApplicationRecord
 
   before_validation :set_multiplier, on: :create
 
+  after_save :set_game_rate  
+
   private
+
+  def set_game_rate
+    game_rate = game.rate ? (game.rate + multiplier * rate) / (1 + multiplier) : rate
+    game.update(rate: game_rate)
+  end
 
   def set_multiplier
     purchase = Purchase.find_by(owner: author, game: game)

@@ -23,6 +23,8 @@ gem 'activerecord-session_store'
 gem 'sidekiq'
 gem 'whenever', require: false
 gem 'gon'
+gem 'mysql2'
+gem 'thinking-sphinx'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

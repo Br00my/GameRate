@@ -8,30 +8,4 @@ RSpec.describe Game, type: :model do
   it { should have_many :purchases }
   it { should have_many :owners }
   it { should have_many(:reviews).dependent :destroy }
-
-  describe '#rate' do
-    let(:user) { create(:user) }
-    let(:game) { create(:game) }
-    
-    before do
-      FactoryBot.create(:purchase, game: game, owner: user)
-      FactoryBot.create(:review, game: game, author: user)
-    end
-
-    describe 'one review' do
-      it 'returns game rate' do
-        expect(game.rate).to eq 1.0
-      end
-    end
-
-    describe 'multiple reviews' do
-      let(:new_user){ create(:user, id: 1) }
-
-      it 'returns game rate' do
-        FactoryBot.create(:purchase, game: game, owner: new_user)
-        FactoryBot.create(:review, game: game, author: new_user, rate: 4)
-        expect(game.rate).to eq 2.5
-      end
-    end
-  end
 end
