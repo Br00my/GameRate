@@ -3,7 +3,7 @@ class GamesController < ApplicationController
   before_action :set_game, only: %i[show]
   
   def index
-    @games = Game.all
+    @games = Game.all.order('rate DESC')
   end
 
   def update_list
