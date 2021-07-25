@@ -11,12 +11,14 @@ class Review < ApplicationRecord
 
   before_validation :set_multiplier, on: :create
 
-  after_save :set_game_rate  
+  after_save :set_game_rate
+  after_destroy :set_game_rate
 
   private
 
   def set_game_rate
-    game_rate = game.rate ? (game.rate + multiplier * rate) / (1 + multiplier) : rate
+    game_rate = (game.reviews.sum('multiplier * rate').to_f / game.reviews.sum(:multiplier)).round(1)
+    game_rate = 0.0 if game_rate.nan?
     game.update(rate: game_rate)
   end
 
