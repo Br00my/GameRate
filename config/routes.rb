@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :games, only: %i[index show] do
     resources :reviews, only: %i[create update destroy], shallow: true do
-      resources :comments, only: %i[create]
+      resources :comments, only: %i[create destroy update]
     end
   end
 
@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   devise_scope :user do
     delete "/users/sign_out" => "devise/sessions#destroy"
   end
+
+  get 'searches/games', to: 'searches#games', as: :searches_games
 end

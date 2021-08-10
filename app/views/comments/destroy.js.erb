@@ -1,0 +1,6 @@
+document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/flash' %>");
+
+<% unless @comment&.persisted? %>
+  var comment = document.querySelector('#comment_<%= @comment.id %>');
+  comment.parentNode.removeChild(comment);
+<% end %>

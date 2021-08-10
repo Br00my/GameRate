@@ -5,10 +5,10 @@ feature 'User can create comments', "
   I'd like to create comment
 " do
 
-  given(:user){ create(:user) }
-  given(:game){ create(:game) }
-  given!(:purchase){ create(:purchase, game: game, owner: user) }
-  given!(:review){ create(:review, author: user, game: game) }
+  given(:user) { create(:user) }
+  given(:game) { create(:game) }
+  given!(:purchase) { create(:purchase, game: game, owner: user) }
+  given!(:review) { create(:review, author: user, game: game) }
 
   describe 'Authenticated user', js: true do
     background do
@@ -81,6 +81,32 @@ feature 'User can create comments', "
         click_on 'Publish'
 
         expect(page).to have_content comment_text
+      end
+    end
+
+    describe 'multiple sessions' do
+      scenario 'tries to create comment' do
+        Capybara.using_session :user do
+          visit root_path
+          click_on 'Sign in'
+          visit game_path(game)
+        end
+
+        Capybara.using_session :user2 do
+          visit game_path(game)
+        end
+
+        comment_text = 'Agreed. Game deserves a high score.'
+        Capybara.using_session :user do
+          click_on 'Leave a comment'
+
+          fill_in 'text', with: comment_text
+          click_on 'Publish'
+        end
+
+        Capybara.using_session :user2 do
+          expect(page).to have_content comment_text
+        end
       end
     end
   end

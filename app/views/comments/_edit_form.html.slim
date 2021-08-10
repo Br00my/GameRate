@@ -1,0 +1,7 @@
+= form_for comment, remote: true, html: { class: 'comment_edit_form', id: "comment_edit_form_#{comment.id}", style: 'display:none;' } do |f|
+
+  input.comment_edit_cancel_btn id="comment_edit_cancel_btn_#{comment.id}" type='button' value='Cancel' data-comment_id=comment.id
+
+  = f.text_area :text, id: :text
+
+  = f.submit 'Edit'

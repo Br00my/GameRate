@@ -19,4 +19,30 @@ RSpec.describe Review, type: :model do
       expect(excess_review.save).to be_falsey
     end
   end
+
+  describe '#set_game_rate' do
+    let(:user) { create(:user) }
+    let(:game) { create(:game) }
+    
+    before do
+      FactoryBot.create(:purchase, game: game, owner: user)
+      FactoryBot.create(:review, game: game, author: user)
+    end
+
+    describe 'one review' do
+      it 'returns game rate' do
+        expect(game.rate).to eq 1.0
+      end
+    end
+
+    describe 'multiple reviews' do
+      let(:new_user){ create(:user, id: 1) }
+
+      it 'returns game rate' do
+        FactoryBot.create(:purchase, game: game, owner: new_user)
+        FactoryBot.create(:review, game: game, author: new_user, rate: 4)
+        expect(game.rate).to eq 2.5
+      end
+    end
+  end
 end

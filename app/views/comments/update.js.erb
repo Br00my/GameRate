@@ -1,0 +1,8 @@
+document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/flash' %>");
+
+<% if @comment&.errors.empty? %>
+  document.querySelector('#comment_edit_form_<%= @comment.id %>').style.display = 'none';
+  document.querySelector('#comment_edit_btn_<%= @comment.id %>').style.display = 'block';
+  document.querySelector('#comment_text_<%= @comment.id %>').textContent = '<%= @comment.text %>';
+  document.querySelector('#comment_text_<%= @comment.id %>').style.display = 'block';
+<% end %>

@@ -1,0 +1,11 @@
+= form_with url: searches_games_path, local: false, method: :get do |f|
+
+  .title
+    = f.label :title
+    = f.text_area :title, id: :title
+
+  .genres
+    = f.label :genre
+    = f.text_area :genres, id: :genres
+
+  = f.submit 'Search'
