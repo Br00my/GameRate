@@ -1,4 +1,4 @@
-= form_for [@game, Review.new], remote: true, html: { class: 'review_create_form', data: { reviewed: current_user.reviewed?(@game) } } do |f|
+= form_for [@game, Review.new], remote: true, html: { class: 'review_create_form form-group p-3 pt-0 border mt-3', data: { reviewed: current_user.reviewed?(@game) } } do |f|
 
   .rate
     = f.radio_button :rate, 5, id: 'review_create_star_5'
@@ -12,6 +12,6 @@
     = f.radio_button :rate, 1, id: 'review_create_star_1'
     = f.label :star1, '1 star', title: 'Poor', id: 'star1', for: 'review_create_star_1'
 
-  = f.text_area :text, id: :text
+  = f.text_area :text, id: :text, class: 'form-control'
 
-  = f.submit 'Publish'
+  = f.submit 'Publish', class: 'mt-2'
