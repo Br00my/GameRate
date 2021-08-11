@@ -1,5 +1,5 @@
-.game style='cursor: pointer;' onclick="window.location='games/#{game.id}';" id="game_#{game.id}"
-  = game.title
-  = image_tag game.picture
-  = game.genres
-  .game_rate= render 'games/stars', game_rate: game.rate || 0.0
+.game.card-body.d-inline-block.m-2 style='cursor: pointer;' onclick="window.location='games/#{game.id}';" id="game_#{game.id}"
+  .card-title= game.title
+  .card-img= image_tag game.picture
+  .card-text= game.genres
+  .game_rate= render 'games/stars', game_rate: game.rate
