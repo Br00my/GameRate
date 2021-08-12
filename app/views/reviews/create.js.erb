@@ -32,4 +32,6 @@ document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/fla
 
     createBtn.style.display = 'block';
   })
+
+  document.querySelector('.game_rate').innerHTML = '<%= @game_stars_partial %>';
 <% end %>

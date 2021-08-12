@@ -4,4 +4,5 @@ document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/fla
   var review = document.querySelector('#review_<%= @review.id %>');
   review.parentNode.removeChild(review);
   document.querySelector('.review_create_form').style.display = 'block';
+  document.querySelector('.game_rate').innerHTML = '<%= @game_stars_partial %>';
 <% end %>

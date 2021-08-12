@@ -70,13 +70,14 @@ feature 'User can create reviews', "
 
         review_text = 'Versatile gameplay and interesting plot'
         Capybara.using_session :user do
-          find('#star5').click
+          find('#star4').click
           fill_in 'text', with: review_text
           click_on 'Publish'
         end
 
         Capybara.using_session :user2 do
           expect(page).to have_content review_text
+          expect(page).to have_content '4.0'
         end
       end
     end

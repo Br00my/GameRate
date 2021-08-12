@@ -49,6 +49,7 @@ feature 'User can delete review', "
 
       Capybara.using_session :user2 do
         expect(page).to_not have_content review.text
+          expect(page).to have_content '0.0'
       end
     end
   end

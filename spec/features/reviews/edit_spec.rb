@@ -85,6 +85,7 @@ feature 'User can edit reviews', "
 
           Capybara.using_session :user2 do
             expect(page).to have_content review_text
+          expect(page).to have_content '5.0'
           end
         end
       end
