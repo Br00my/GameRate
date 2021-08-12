@@ -23,7 +23,7 @@ feature 'User can edit reviews', "
       within '.comment' do
         click_on 'Edit'
         fill_in 'text', with: comment_text
-        click_on 'Edit'
+        click_on 'Confirm'
       end
 
       expect(page).to have_content 'Your comment was successfully edited.'
@@ -34,7 +34,7 @@ feature 'User can edit reviews', "
       within '.comment' do
         click_on 'Edit'
         fill_in 'text', with: ''
-        click_on 'Edit'
+        click_on 'Confirm'
       end
 
       expect(page).to have_content 'Your comment was not edited. Text can not be blank'
@@ -76,7 +76,7 @@ feature 'User can edit reviews', "
           within '.comment' do
             click_on 'Edit'
             fill_in 'text', with: comment_text
-            click_on 'Edit'
+            click_on 'Confirm'
           end
         end
 

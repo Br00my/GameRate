@@ -79,7 +79,6 @@ document.addEventListener('turbolinks:load', function(){
 
     editBtn.style.display = 'block';
     var reviewId = e.target.dataset.review_id;
-    console.log(reviewId);
     document.querySelector('#review_data_' + reviewId).style.display = 'block';
   })
 })
