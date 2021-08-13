@@ -24,7 +24,7 @@ feature 'User can edit reviews', "
         find('#star5').click
         within '.review_edit_form' do
           fill_in 'text', with: review_text
-          click_on 'Edit'
+          click_on 'Confirm'
         end
         within '.review' do
           expect(find('.review_rate')[:style]).to eq '--rating: 5;'
@@ -37,7 +37,7 @@ feature 'User can edit reviews', "
         find('#star5').click
         within '.review_edit_form' do
           fill_in 'text', with: ''
-          click_on 'Edit'
+          click_on 'Confirm'
         end
         expect(page).to have_content 'Your review was not edited. Both star rate and text are needed.'
       end
@@ -79,12 +79,13 @@ feature 'User can edit reviews', "
             find('#star5').click
             within '.review_edit_form' do
               fill_in 'text', with: review_text
-              click_on 'Edit'
+              click_on 'Confirm'
             end
           end
 
           Capybara.using_session :user2 do
             expect(page).to have_content review_text
+          expect(page).to have_content '5.0'
           end
         end
       end
