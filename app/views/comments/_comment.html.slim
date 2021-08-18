@@ -1,8 +1,8 @@
 .comment.border.p-2.mt-2 id="comment_#{comment.id}"
-  .comment_text.p-2 id="comment_text_#{comment.id}"= comment.text
+  .comment_text.p-1 id="comment_text_#{comment.id}"= comment.text
 
   - if user_signed_in? && current_user.comment_author?(comment)
-    .comment_actions.pt-3.border-top.navbar-expand-lg
+    .comment_actions.pt-2.border-top.navbar-expand-lg
       = render 'comments/edit_form', comment: comment
 
       input.comment_edit_btn.m-1 id="comment_edit_btn_#{comment.id}" type='button' value='Edit' data-comment_id="#{comment.id}"

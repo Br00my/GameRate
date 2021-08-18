@@ -1,17 +1,17 @@
-.review.card.p-2 id="review_#{review.id}"
+.review.card.p-1 id="review_#{review.id}"
   = render 'reviews/data', review: review
 
   - if user_signed_in?
-    .actions.pt-3.border-bottom.navbar-expand-lg.pb-3
+    .actions.pt-2.border-bottom.border-top.mt-1.navbar-expand-lg.pb-2
       - if current_user.review_author?(review)
         = render 'reviews/edit_form', review: review
 
-        input.review_edit_btn.m-2 type='button' value='Edit' data-review_id="#{review.id}"
+        input.review_edit_btn.m-1 type='button' value='Edit' data-review_id="#{review.id}"
 
 
         = button_to 'Delete', review_path(review), method: :delete, remote: true, class: 'm-2'
 
     - if current_user.owns?(review.game)
-      .create_window.m-4= render 'comments/create_window', review: review
+      .create_window.m-3= render 'comments/create_window', review: review
 
   .comments id="comments_#{review.id}" = render review.comments
