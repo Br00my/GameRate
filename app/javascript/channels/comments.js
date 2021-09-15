@@ -64,6 +64,7 @@ document.addEventListener('turbolinks:load', function(){
       e.target.style.display = 'none';
 
       var commentId = e.target.dataset.comment_id;
+      document.querySelector('#comment_text_' + commentId).style.display = 'none';
       document.querySelector('#comment_edit_form_' + commentId).style.display = 'block';
     })
   })

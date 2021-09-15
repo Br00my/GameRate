@@ -33,15 +33,17 @@ document.addEventListener('turbolinks:load', function(){
               })
             }
             document.querySelector('.reviews').appendChild(review);
+            document.querySelector('.game_rate').innerHTML = data.game_stars_partial;
             break;
           case 'update':
             var review = document.querySelector('#review_data_' + data.review_id);
             review.innerHTML = data.review_partial;
+            document.querySelector('.game_rate').innerHTML = data.game_stars_partial;
             break;
           case 'destroy':
             var review = document.querySelector('#review_' + data.review_id);
-            console.log(data.review_id);
             review.parentNode.removeChild(review);
+            document.querySelector('.game_rate').innerHTML = data.game_stars_partial;
             break;
         }
       }
@@ -72,9 +74,11 @@ document.addEventListener('turbolinks:load', function(){
     document.querySelector('#review_data_' + reviewId).style.display = 'none';
   })
 
-  document.querySelector('.review_edit_cancel_btn').addEventListener('click', function(){
+  document.querySelector('.review_edit_cancel_btn').addEventListener('click', function(e){
     document.querySelector('.review_edit_form').style.display = 'none';
 
     editBtn.style.display = 'block';
+    var reviewId = e.target.dataset.review_id;
+    document.querySelector('#review_data_' + reviewId).style.display = 'block';
   })
 })

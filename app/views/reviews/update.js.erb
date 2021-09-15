@@ -6,4 +6,5 @@ document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/fla
   document.querySelector('#review_data_<%= @review.id %>').querySelector('.review_rate').style.cssText = '--rating: <%= @review.rate %>;';
   document.querySelector('#review_data_<%= @review.id %>').querySelector('.review_text').textContent = '<%= @review.text %>';
   document.querySelector('#review_data_<%= @review.id %>').style.display = 'block';
+  document.querySelector('.game_rate').innerHTML = '<%= @game_stars_partial %>';
 <% end %>

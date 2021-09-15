@@ -1,8 +1,10 @@
-= @game.title
-= @game.genres
+.m-3
+  h3= @game.title
+  .game_genres.mt-2= @game.genres
+  .game_rate.mb-2.mt-1= render 'games/stars', game_rate: @game.rate
 
-- if user_signed_in? && current_user&.owns?(@game)
-  = render 'reviews/create_form'
+  - if user_signed_in? && current_user&.owns?(@game)
+    = render 'reviews/create_form'
 
-.reviews
-  = render @reviews
+  .reviews
+    = render @reviews

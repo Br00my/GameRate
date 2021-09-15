@@ -12,6 +12,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params.merge({ game: @game, author: current_user }))
 
     if @review.save
+      set_game_stars_partial
       publish
       flash.now[:notice] = 'Your review was successfully published.'
     else
@@ -26,6 +27,7 @@ class ReviewsController < ApplicationController
     end
 
     if @review.update(review_params)
+      set_game_stars_partial
       update_published
       flash.now[:notice] = 'Your review was successfully edited.'
     else
@@ -40,11 +42,16 @@ class ReviewsController < ApplicationController
     end
 
     @review.destroy
+    set_game_stars_partial
     destroy_published
     flash.now[:notice] = 'Your review was successfully deleted.'
   end
 
   private
+
+  def set_game_stars_partial
+    @game_stars_partial = render_to_string(partial: 'games/stars', locals: { game_rate: @review.game.rate })
+  end
 
   def update_published
     ActionCable.server.broadcast(
@@ -52,7 +59,7 @@ class ReviewsController < ApplicationController
       action: :update,
       review_partial: render_to_string(partial: 'reviews/data', locals: { review: @review }),
       review_id: @review.id,
-      stars_partial: render_to_string(partial: 'games/stars', locals: { game_rate: @review.game.rate }),
+      game_stars_partial: @game_stars_partial,
       game_id: @review.game.id,
       user_id: current_user.id
       )
@@ -63,7 +70,7 @@ class ReviewsController < ApplicationController
       'reviews',
       action: :destroy,
       review_id: @review.id,
-      stars_partial: render_to_string(partial: 'games/stars', locals: { game_rate: @review.game.rate }),
+      game_stars_partial: @game_stars_partial,
       game_id: @review.game.id,
       user_id: current_user.id
       )
@@ -75,7 +82,7 @@ class ReviewsController < ApplicationController
       action: :create,
       review_partial: render_to_string(partial: 'reviews/data', locals: { review: @review }),
       review_id: @review.id,
-      game_stars_partial: render_to_string(partial: 'games/stars', locals: { game_rate: @review.game.rate }),
+      game_stars_partial: @game_stars_partial,
       game_id: @review.game.id,
       comment_create_window_partial: render_to_string(partial: 'comments/create_window', locals: { review: @review }),
       user_id: current_user.id

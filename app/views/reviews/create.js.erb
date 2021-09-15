@@ -9,14 +9,14 @@ document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/fla
 
       document.querySelector('.review_edit_form').style.display = 'block';
 
-      var reviewId = e.target.dataset.review_id;      
-      document.querySelector('#review_data_' + reviewId).style.display = 'none';
+      document.querySelector('#review_data_<%= @review.id %>').style.display = 'none';
   })
 
-  document.querySelector('.review_edit_cancel_btn').addEventListener('click', function(e){
+  document.querySelector('.review_edit_cancel_btn').addEventListener('click', function(){
     document.querySelector('.review_edit_form').style.display = 'none';
 
-    editBtn.style.display = 'block';
+    document.querySelector('.review_edit_btn').style.display = 'block';
+    document.querySelector('#review_data_<%= @review.id %>').style.display = 'block';
   })
 
   var createBtn = document.querySelector('#comment_create_btn_<%= @review.id %>');
@@ -27,9 +27,11 @@ document.querySelector('.flash').innerHTML = ("<%= j render partial: 'shared/fla
     document.querySelector('#comment_create_form_<%= @review.id %>').style.display = 'block';
   })
 
-  document.querySelector('#comment_create_cancel_btn_<%= @review.id %>').addEventListener('click', function(e){
+  document.querySelector('#comment_create_cancel_btn_<%= @review.id %>').addEventListener('click', function(){
     document.querySelector('#comment_create_form_<%= @review.id %>').style.display = 'none';
 
     createBtn.style.display = 'block';
   })
+
+  document.querySelector('.game_rate').innerHTML = '<%= @game_stars_partial %>';
 <% end %>

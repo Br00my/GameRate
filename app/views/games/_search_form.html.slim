@@ -1,11 +1,11 @@
-= form_with url: searches_games_path, local: false, method: :get do |f|
+= form_with url: searches_games_path, local: false, method: :get, html: { class: 'form-group p-3 border-bottom' } do |f|
 
   .title
     = f.label :title
-    = f.text_area :title, id: :title
+    = f.text_field :title, id: :title, class: 'form-control'
 
-  .genres
+  .genres.mt-1
     = f.label :genre
-    = f.text_area :genres, id: :genres
+    = f.text_field :genres, id: :genres, class: 'form-control'
 
-  = f.submit 'Search'
+  .mt-2.mb-1= f.submit 'Search'
