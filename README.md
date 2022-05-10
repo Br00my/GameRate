@@ -1,18 +1,17 @@
 # README
-### Краткое описание
+### Brief description
 
-Сайт, пользователи которого смогут оставлять отзывы об игре и просматривать их рейтинг.
+A site where users can leave reviews about the game and view their rating.
 
-- Пользователь авторизуется через игровой сервис Steam
-- Отзыв может быть оставлен только о преобретённой игре
-- Вес отзыва зависит от сыгранного времени
+- The user logs in through the Steam game service
+- Feedback can only be left about the acquired game
+- The weight of the review depends on the time played
 
+### Technologies used
 
-### Используемые технологии:
-
-- Полностью разработан по методологии TDD/BDD (RSpec/Capybara)
-- ActionCable для работы с WebSockets
-- ActiveJob для фонового обновления игр и согранного времени(кол-во игр может достигать до 200-300)
-- Sphinx для поиска игры по названию и жанрам
-- Steam Api для получения информации о: преобретенных пользователем играх(название, жанр и тд), сыгранном времени, доступе к профилю пользователя
-- Devise для работы со Steam OmniAuth
+- Fully developed according to the TDD/BDD methodology (RSpec/Capybara)
+- ActionCable for working with WebSockets
+- ActiveJob for background updates of games and the selected time (the number of games can reach up to 200-300)
+- Sphinx for searching games by name and genres
+- Steam Api for obtaining information about: games acquired by the user (name, genre, etc.), time played, access to the user profile
+- Devise to work with Steam OmniAuth
