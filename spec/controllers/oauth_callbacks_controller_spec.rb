@@ -4,9 +4,11 @@ RSpec.describe OauthCallbacksController, type: :controller do
   before { @request.env['devise.mapping'] = Devise.mappings[:user] }
 
   describe '#steam' do
+    let(:oauth_data) { OmniAuth.config.mock_auth[:steam] }
+
     before do
       allow(request.env).to receive(:[]).and_call_original
-      allow(request.env).to receive(:[]).with('omniauth.auth').and_return(OmniAuth.config.mock_auth[:steam])
+      allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
     end
 
     context 'user exists' do
