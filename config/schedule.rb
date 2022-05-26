@@ -20,5 +20,5 @@
 # Learn more: http://github.com/javan/whenever
 
 every 1.month do
-  runner 'GamesUpdateJob.perform_later'
+  runner 'GamesUpdateJob.perform_now'
 end
