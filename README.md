@@ -1,4 +1,4 @@
-# README
+# Test for Middle Ruby on Rails Developer position in Jetfin company
 ### Brief description
 
 A site where users can leave reviews about the game and view their rating.
